@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Appenders>
+		<Console name="Console-Appender" target="SYSTEM_OUT">
+			<PatternLayout>
+				<pattern>
+					[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+		</Console>
+		<RollingRandomAccessFile
+			name="Rolling-Random-Access-File-Appender"
+			fileName="./logs/cmenrichment.log"
+			filePattern="./logs/archive/cmenrichment.log.%d{yyyy-MM-dd-hh-mm}.gz">
+			<PatternLayout
+				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="100" />
+		</RollingRandomAccessFile>
+
+	</Appenders>
+	<Loggers>
+		<AsyncLogger name="com.samsung"
+			level="info" additivity="false">
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		<AsyncLogger name="org.springframework"
+			level="info" additivity="false">
+			<AppenderRef ref="Rolling-Random-Access-File-Appender" />
+		</AsyncLogger>
+		    <Root level="error">
+      			<AppenderRef ref="Console-Appender"/>
+    		</Root>
+		
+	</Loggers>
+	
+</Configuration>
